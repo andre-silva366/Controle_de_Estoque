@@ -7,6 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WEB", "WEB", "{4A35C604-682
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeAlmoxarifado.WEB", "ControleDeAlmoxarifado.WEB\ControleDeAlmoxarifado.WEB.csproj", "{78B4702D-ACAE-4941-B0B1-6F59486BD0AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{462F03C1-A56D-4ACD-97F9-B6D05A937DF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeAlmoxarifado.API", "ControleDeAlmoxarifado.API\ControleDeAlmoxarifado.API.csproj", "{AB5D9800-B0E5-48EB-9129-762701E72B34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TEST", "TEST", "{2BF1C7C2-21CB-46A9-9813-873512B92600}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDeAlmoxarifado.TEST", "ControleDeAlmoxarifado.TEST\ControleDeAlmoxarifado.TEST.csproj", "{B017D646-8A07-4626-9C2E-E20BCEA18E16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +25,21 @@ Global
 		{78B4702D-ACAE-4941-B0B1-6F59486BD0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78B4702D-ACAE-4941-B0B1-6F59486BD0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78B4702D-ACAE-4941-B0B1-6F59486BD0AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB5D9800-B0E5-48EB-9129-762701E72B34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB5D9800-B0E5-48EB-9129-762701E72B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB5D9800-B0E5-48EB-9129-762701E72B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB5D9800-B0E5-48EB-9129-762701E72B34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B017D646-8A07-4626-9C2E-E20BCEA18E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B017D646-8A07-4626-9C2E-E20BCEA18E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B017D646-8A07-4626-9C2E-E20BCEA18E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B017D646-8A07-4626-9C2E-E20BCEA18E16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{78B4702D-ACAE-4941-B0B1-6F59486BD0AE} = {4A35C604-682B-4725-9143-F902CEF8B024}
+		{AB5D9800-B0E5-48EB-9129-762701E72B34} = {462F03C1-A56D-4ACD-97F9-B6D05A937DF2}
+		{B017D646-8A07-4626-9C2E-E20BCEA18E16} = {2BF1C7C2-21CB-46A9-9813-873512B92600}
 	EndGlobalSection
 EndGlobal

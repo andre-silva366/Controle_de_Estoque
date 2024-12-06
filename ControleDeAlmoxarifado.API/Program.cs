@@ -1,3 +1,9 @@
+using ControleDeAlmoxarifado.API.Model;
+using ControleDeAlmoxarifado.API.Services.Repositories.Implements;
+using ControleDeAlmoxarifado.API.Services.Repositories.Interfaces;
+using MySql.Data.MySqlClient;
+using System.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +12,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Configurar a string de conexão para uso com Dapper e MySQL
+builder.Services.AddSingleton<IDbConnection>((sp) => new MySqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Registrar o repositório genérico
+builder.Services.AddScoped(typeof(IRepository<Categoria>), typeof(CategoriaRepository));
 
 var app = builder.Build();
 
