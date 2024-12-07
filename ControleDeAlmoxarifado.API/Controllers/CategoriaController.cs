@@ -1,5 +1,4 @@
 ﻿using ControleDeAlmoxarifado.API.Model;
-using ControleDeAlmoxarifado.API.Services.Repositories.Implements;
 using ControleDeAlmoxarifado.API.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

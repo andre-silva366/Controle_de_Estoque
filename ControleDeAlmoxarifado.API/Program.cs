@@ -18,6 +18,7 @@ builder.Services.AddSingleton<IDbConnection>((sp) => new MySqlConnection(builder
 
 // Registrar o repositório genérico
 builder.Services.AddScoped(typeof(IRepository<Categoria>), typeof(CategoriaRepository));
+builder.Services.AddScoped(typeof(IRepository<Funcionario>), typeof(FuncionarioRepository));
 
 var app = builder.Build();
 
