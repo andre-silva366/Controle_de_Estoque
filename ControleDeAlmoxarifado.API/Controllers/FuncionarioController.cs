@@ -1,5 +1,4 @@
 ﻿using ControleDeAlmoxarifado.API.Model;
-using ControleDeAlmoxarifado.API.Services.Repositories.Implements;
 using ControleDeAlmoxarifado.API.Services.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +16,7 @@ public class FuncionarioController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Funcionario funcionario)
+    public IActionResult Create([FromBody]Funcionario funcionario)
     {
         if (funcionario == null)
         {
