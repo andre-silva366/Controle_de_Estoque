@@ -20,6 +20,7 @@ builder.Services.AddSingleton<IDbConnection>((sp) => new MySqlConnection(builder
 builder.Services.AddScoped(typeof(IRepository<Categoria>), typeof(CategoriaRepository));
 builder.Services.AddScoped(typeof(IRepository<Funcionario>), typeof(FuncionarioRepository));
 builder.Services.AddScoped(typeof(IRepository<Fornecedor>), typeof(FornecedorRepository));
+builder.Services.AddScoped(typeof(IRepository<Produto>), typeof(ProdutoRepository));
 
 var app = builder.Build();
 

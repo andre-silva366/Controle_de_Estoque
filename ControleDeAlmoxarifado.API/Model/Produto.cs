@@ -8,6 +8,4 @@ public class Produto
     public int Quantidade { get; set; }
     public int CategoriaId { get; set; }
     public int FornecedorId { get; set; }
-    public Categoria Categoria { get; set; }
-    public Fornecedor Fornecedor { get; set; }
 }
