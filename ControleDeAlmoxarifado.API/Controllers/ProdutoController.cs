@@ -30,7 +30,7 @@ public class ProdutoController : ControllerBase
     public ActionResult<IEnumerable<Produto>> GetAll()
     {
         var produtos = _repository.GetAll().ToList();
-        if(produtos.Count == 0)
+        if(!produtos.Any())
         {
             return NoContent();
         }

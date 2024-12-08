@@ -28,4 +28,15 @@ public class SaidaController : ControllerBase
         var saidaAdicionada = _repository.Add(saida);
         return Ok(saidaAdicionada);
     }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Saida>> GetAll()
+    {
+        var saidas = _repository.GetAll();
+        if (!saidas.Any())
+        {
+            return NoContent();
+        }
+        return Ok(saidas);
+    }
 }

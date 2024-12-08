@@ -44,7 +44,22 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
 
     public IEnumerable<Saida> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = @"SELECT Id, DataSaida, ProdutoId, SolicitanteId, AlmoxarifeId, Quantidade FROM Saida;";
+
+            var saidas = _connection.Query<Saida>(query).ToList();
+            return saidas;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public IEnumerable<Saida> GetByFornecedor(string nome)

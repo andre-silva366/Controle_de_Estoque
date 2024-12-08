@@ -28,4 +28,15 @@ public class EntradaController : ControllerBase
         var entradaAdicionada = _repository.Add(entrada);
         return Ok(entradaAdicionada);
     }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Entrada>> GetAll()
+    {
+        var entradas = _repository.GetAll().ToList();
+        if(!entradas.Any())
+        {
+            return NoContent();
+        }
+        return Ok(entradas);
+    }
 }

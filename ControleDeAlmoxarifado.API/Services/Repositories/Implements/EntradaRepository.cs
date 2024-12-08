@@ -47,7 +47,22 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
 
     public IEnumerable<Entrada> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = @"SELECT Id,DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId FROM Entrada;";
+
+            var entradas = _connection.Query<Entrada>(query).ToList();
+            return entradas;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public IEnumerable<Entrada> GetByFornecedor(string nome)

@@ -29,7 +29,7 @@ public class FuncionarioController : ControllerBase
     public ActionResult<IEnumerable<Funcionario>> GetAll()
     {
         var funcionarios = _repository.GetAll().ToList();
-        if(funcionarios.Count() == 0)
+        if(!funcionarios.Any())
         {
             return NoContent();
         }

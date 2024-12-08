@@ -29,7 +29,7 @@ public class CategoriaController : ControllerBase
     public ActionResult<IEnumerable<Categoria>> GetAll()
     {
         var categorias = _repository.GetAll().ToList();
-        if(categorias.Count == 0)
+        if(!categorias.Any())
         {
             return NoContent();
         }

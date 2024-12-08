@@ -33,7 +33,21 @@ public class FornecedorRepository : IRepository<Fornecedor>
 
     public IEnumerable<Fornecedor> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = @"SELECT Id, Nome, Telefone, Email, Cnpj FROM Fornecedor";
+            var fornecedores = _connection.Query<Fornecedor>(query).ToList();
+            return fornecedores;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public Fornecedor GetById(int id)

@@ -24,4 +24,15 @@ public class FornecedorController : ControllerBase
         }
         return Ok(_repository.Add(fornecedor));
     }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Fornecedor>> GetAll()
+    {
+        var fornecedores = _repository.GetAll().ToList();
+        if(!fornecedores.Any())
+        {
+            return NoContent();
+        }
+        return fornecedores;
+    }
 }
