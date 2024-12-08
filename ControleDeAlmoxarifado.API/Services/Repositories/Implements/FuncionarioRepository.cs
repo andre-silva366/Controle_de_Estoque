@@ -55,7 +55,7 @@ public class FuncionarioRepository : IRepository<Funcionario>
         throw new NotImplementedException();
     }
 
-    public void Remove(Funcionario entity)
+    public void Remove(int id)
     {
         throw new NotImplementedException();
     }

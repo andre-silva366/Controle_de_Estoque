@@ -57,7 +57,7 @@ public class CategoriaRepository : IRepository<Categoria>
         throw new NotImplementedException();
     }
 
-    public void Remove(Categoria entity)
+    public void Remove(int id)
     {
         throw new NotImplementedException();
     }

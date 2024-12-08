@@ -55,7 +55,7 @@ public class FornecedorRepository : IRepository<Fornecedor>
         throw new NotImplementedException();
     }
 
-    public void Remove(Fornecedor entity)
+    public void Remove(int id)
     {
         throw new NotImplementedException();
     }

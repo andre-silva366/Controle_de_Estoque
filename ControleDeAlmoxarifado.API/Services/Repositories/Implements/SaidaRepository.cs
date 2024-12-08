@@ -62,6 +62,11 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
         }
     }
 
+    public IEnumerable<Saida> GetByCode(string codigo)
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Saida> GetByFornecedor(string nome)
     {
         throw new NotImplementedException();
@@ -92,7 +97,7 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
         throw new NotImplementedException();
     }
 
-    public void Remove(Saida entity)
+    public void Remove(int id)
     {
         throw new NotImplementedException();
     }

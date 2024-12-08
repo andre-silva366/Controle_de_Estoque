@@ -7,4 +7,5 @@ public interface ITransacoesRepository<T> where T : class
     IEnumerable<T> GetByProductName(string nome);
     IEnumerable<T> GetByFuncionario(string nome);
     IEnumerable<T> GetByFornecedor(string nome);
+    IEnumerable<T> GetByCode(string codigo);
 }

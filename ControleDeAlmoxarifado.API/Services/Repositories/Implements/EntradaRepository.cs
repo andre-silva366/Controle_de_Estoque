@@ -65,6 +65,11 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         }
     }
 
+    public IEnumerable<Entrada> GetByCode(string codigo)
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Entrada> GetByFornecedor(string nome)
     {
         throw new NotImplementedException();
@@ -95,7 +100,7 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         throw new NotImplementedException();
     }
 
-    public void Remove(Entrada entity)
+    public void Remove(int id)
     {
         throw new NotImplementedException();
     }

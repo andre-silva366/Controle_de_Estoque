@@ -52,12 +52,40 @@ public class ProdutoRepository : IRepository<Produto>
 
     public Produto GetById(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "SELECT Id ,Nome, Descricao, Quantidade, CategoriaId, FornecedorId,Codigo FROM Produto WHERE Id = @Id;";
+            var produto = _connection.QuerySingle<Produto>(query, new {Id = id});
+            return produto;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
-    public void Remove(Produto entity)
+    public void Remove(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "DELETE FROM Produto WHERE Id = @Id ;";
+            _connection.Query<Produto>(query, new { Id = id });
+            
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }
 

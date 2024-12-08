@@ -36,4 +36,36 @@ public class ProdutoController : ControllerBase
         }
         return Ok(produtos);
     }
+
+    [HttpGet("{id:int}")]
+    public ActionResult<Produto> GetById(int id)
+    {
+        try
+        {
+            var produto = _repository.GetById(id);
+            if(produto == null)
+            {
+                return NotFound();
+            }
+            return Ok(produto);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete]
+    public IActionResult Delete(int id)
+    {
+        try
+        {
+             _repository.Remove(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }
