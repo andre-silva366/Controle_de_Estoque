@@ -21,6 +21,11 @@ builder.Services.AddScoped(typeof(IRepository<Categoria>), typeof(CategoriaRepos
 builder.Services.AddScoped(typeof(IRepository<Funcionario>), typeof(FuncionarioRepository));
 builder.Services.AddScoped(typeof(IRepository<Fornecedor>), typeof(FornecedorRepository));
 builder.Services.AddScoped(typeof(IRepository<Produto>), typeof(ProdutoRepository));
+builder.Services.AddScoped(typeof(IRepository<Entrada>), typeof(EntradaRepository));
+builder.Services.AddScoped(typeof(IRepository<Saida>), typeof(SaidaRepository));
+builder.Services.AddScoped(typeof(ITransacoesRepository<Saida>), typeof(SaidaRepository));
+builder.Services.AddScoped(typeof(ITransacoesRepository<Entrada>), typeof(EntradaRepository));
+
 
 var app = builder.Build();
 

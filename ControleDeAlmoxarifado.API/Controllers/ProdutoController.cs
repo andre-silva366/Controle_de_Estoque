@@ -16,7 +16,7 @@ public class ProdutoController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Produto produto)
+    public IActionResult Create([FromBody]Produto produto)
     {
         if(produto == null)
         {
