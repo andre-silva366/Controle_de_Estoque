@@ -24,4 +24,15 @@ public class FuncionarioController : ControllerBase
         }
         return Ok(_repository.Add(funcionario));
     }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Funcionario>> GetAll()
+    {
+        var funcionarios = _repository.GetAll().ToList();
+        if(funcionarios.Count() == 0)
+        {
+            return NoContent();
+        }
+        return funcionarios;
+    }
 }

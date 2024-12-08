@@ -33,7 +33,21 @@ public class FuncionarioRepository : IRepository<Funcionario>
 
     public IEnumerable<Funcionario> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = @"SELECT Id, Matricula, Nome, Cargo FROM Funcionario;";
+            var funcionarios = _connection.Query<Funcionario>(query).ToList();
+            return funcionarios;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public Funcionario GetById(int id)
