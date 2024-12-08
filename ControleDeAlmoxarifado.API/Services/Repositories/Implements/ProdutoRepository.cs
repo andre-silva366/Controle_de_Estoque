@@ -33,7 +33,21 @@ public class ProdutoRepository : IRepository<Produto>
 
     public IEnumerable<Produto> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = @"SELECT Id ,Nome, Descricao, Quantidade, CategoriaId, FornecedorId,Codigo FROM Produto;";
+            var produtos = _connection.Query<Produto>(query);
+            return produtos;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public Produto GetById(int id)

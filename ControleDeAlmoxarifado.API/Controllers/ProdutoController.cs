@@ -25,4 +25,15 @@ public class ProdutoController : ControllerBase
         
         return Ok(_repository.Add(produto));
     }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Produto>> GetAll()
+    {
+        var produtos = _repository.GetAll().ToList();
+        if(produtos.Count == 0)
+        {
+            return NoContent();
+        }
+        return Ok(produtos);
+    }
 }
