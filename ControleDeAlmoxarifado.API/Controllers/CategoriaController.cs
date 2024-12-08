@@ -24,4 +24,15 @@ public class CategoriaController : ControllerBase
         }
         return Ok(_repository.Add(categoria));
     }
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Categoria>> GetAll()
+    {
+        var categorias = _repository.GetAll().ToList();
+        if(categorias.Count == 0)
+        {
+            return NoContent();
+        }
+        return categorias;
+    }
 }

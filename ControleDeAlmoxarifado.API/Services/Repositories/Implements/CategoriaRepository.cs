@@ -35,7 +35,21 @@ public class CategoriaRepository : IRepository<Categoria>
 
     public IEnumerable<Categoria> GetAll()
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open ();
+            var query = "SELECT Id, Nome FROM Categoria;";
+            var categorias = _connection.Query<Categoria>(query).ToList();
+            return categorias;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public Categoria GetById(int id)
