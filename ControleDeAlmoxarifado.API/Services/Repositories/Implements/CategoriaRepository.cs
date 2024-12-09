@@ -54,11 +54,38 @@ public class CategoriaRepository : IRepository<Categoria>
 
     public Categoria GetById(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "SELECT Id, Nome FROM Categoria WHERE Id = @Id;";
+            var categoria = _connection.QuerySingle<Categoria>(query, new {Id = id});
+            return categoria;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public void Remove(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "DELETE FROM Categoria WHERE Id = @Id;";
+            _connection.Query(query, new {Id = id});
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }

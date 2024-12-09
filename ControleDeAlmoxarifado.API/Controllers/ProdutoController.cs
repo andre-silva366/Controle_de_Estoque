@@ -58,14 +58,12 @@ public class ProdutoController : ControllerBase
     [HttpDelete]
     public IActionResult Delete(int id)
     {
-        try
+        var produto = _repository.GetById(id);
+        if (produto == null)
         {
-             _repository.Remove(id);
-            return Ok();
+            return NotFound($"O produto com id: {id} não foi encontrado.");
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        _repository.Remove(id);
+        return Ok($"O produto com id: {id} foi deletado com sucesso.");
     }
 }

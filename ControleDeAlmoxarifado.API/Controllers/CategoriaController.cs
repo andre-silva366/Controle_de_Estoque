@@ -35,4 +35,36 @@ public class CategoriaController : ControllerBase
         }
         return categorias;
     }
+
+    [HttpGet("{id:int}")]
+    public ActionResult<Categoria> GetById(int id)
+    {
+        try
+        {
+            var categoria = _repository.GetById(id);
+            if (categoria == null)
+            {
+                return NoContent();
+            }
+            return Ok(categoria);
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        
+    }
+
+    [HttpDelete]
+    public IActionResult Delete(int id)
+    {
+        var categoria = _repository.GetById(id);
+        if (categoria == null)
+        {
+            return NotFound($"Categoria com o id: {id} não foi encontrada.");
+        }
+        _repository.Remove(id);
+        return Ok($"A categoria com id: {id} foi deletada com sucesso.");             
+        
+    }
 }
