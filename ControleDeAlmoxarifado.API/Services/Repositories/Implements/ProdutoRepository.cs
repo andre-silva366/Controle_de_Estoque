@@ -61,7 +61,7 @@ public class ProdutoRepository : IRepository<Produto>
         }
         catch (Exception ex)
         {
-            throw new Exception($"{ex.Message}");
+            return null;
         }
         finally
         {

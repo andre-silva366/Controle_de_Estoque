@@ -35,4 +35,29 @@ public class FuncionarioController : ControllerBase
         }
         return funcionarios;
     }
+
+    [HttpGet("{id:int}")]
+    public IActionResult GetById(int id)
+    {
+        var funcionario = _repository.GetById(id);
+        if(funcionario == null)
+        {
+            return BadRequest($"Não foi encontrado funcionario com id: {id}"); ;
+        }
+        return Ok(funcionario);
+    }
+
+    [HttpDelete]
+    public IActionResult Delete(int id)
+    {
+        try
+        {
+            _repository.Remove(id);
+            return Ok($"O funcionario com id: {id} foi deletado com sucesso.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"{ex.Message}");
+        }
+    }
 }

@@ -52,11 +52,41 @@ public class FuncionarioRepository : IRepository<Funcionario>
 
     public Funcionario GetById(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "SELECT Id, Matricula, Nome, Cargo FROM Funcionario WHERE Id = @Id;";
+            return  _connection.QuerySingle<Funcionario>(query,new {Id = id});
+        }
+        catch(Exception ex)
+        {
+            return null; 
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 
     public void Remove(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "DELETE FROM Funcionario WHERE Id = @Id;";
+            var row = _connection.Execute(query, new {Id = id});
+            if(row == 0)
+            {
+                throw new Exception($"Não encontrado funcionario com o id: {id}");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"{ex.Message}");
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }
