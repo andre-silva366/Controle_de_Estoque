@@ -23,7 +23,7 @@ public class ProdutoRepository : IRepository<Produto>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -42,7 +42,7 @@ public class ProdutoRepository : IRepository<Produto>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -61,7 +61,7 @@ public class ProdutoRepository : IRepository<Produto>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {

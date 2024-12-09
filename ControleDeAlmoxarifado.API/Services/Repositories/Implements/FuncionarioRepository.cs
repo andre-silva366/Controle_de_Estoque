@@ -23,7 +23,7 @@ public class FuncionarioRepository : IRepository<Funcionario>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -42,7 +42,7 @@ public class FuncionarioRepository : IRepository<Funcionario>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {

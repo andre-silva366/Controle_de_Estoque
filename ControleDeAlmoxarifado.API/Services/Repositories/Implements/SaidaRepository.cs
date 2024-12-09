@@ -34,7 +34,7 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -54,7 +54,7 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {

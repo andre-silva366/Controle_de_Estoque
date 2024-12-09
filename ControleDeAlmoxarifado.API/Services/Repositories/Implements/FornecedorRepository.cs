@@ -23,7 +23,7 @@ public class FornecedorRepository : IRepository<Fornecedor>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -42,7 +42,7 @@ public class FornecedorRepository : IRepository<Fornecedor>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -52,11 +52,38 @@ public class FornecedorRepository : IRepository<Fornecedor>
 
     public Fornecedor GetById(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "SELECT Id, Nome, Telefone, Email, Cnpj FROM Fornecedor  WHERE Id = @Id";
+            var fornecedor = _connection.QuerySingle<Fornecedor>(query,new {Id = id});
+            return fornecedor;
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
+        finally 
+        { 
+            _connection.Close(); 
+        }
     }
 
     public void Remove(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var query = "DELETE FROM Fornecedor WHERE Id = @Id";
+            _connection.Query(query, new {Id = id});
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"{ex.Message}");
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }

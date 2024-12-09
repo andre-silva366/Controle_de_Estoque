@@ -37,7 +37,7 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -57,7 +57,7 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {

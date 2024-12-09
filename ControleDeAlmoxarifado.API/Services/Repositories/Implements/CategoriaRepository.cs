@@ -25,7 +25,7 @@ public class CategoriaRepository : IRepository<Categoria>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -44,7 +44,7 @@ public class CategoriaRepository : IRepository<Categoria>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -63,7 +63,7 @@ public class CategoriaRepository : IRepository<Categoria>
         }
         catch (Exception ex)
         {
-            return null;
+            throw new Exception($"{ex.Message}");
         }
         finally
         {
