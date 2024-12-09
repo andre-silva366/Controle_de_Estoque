@@ -63,7 +63,7 @@ public class CategoriaRepository : IRepository<Categoria>
         }
         catch (Exception ex)
         {
-            throw new Exception($"{ex.Message}");
+            return null;
         }
         finally
         {
@@ -77,7 +77,10 @@ public class CategoriaRepository : IRepository<Categoria>
         {
             _connection.Open();
             var query = "DELETE FROM Categoria WHERE Id = @Id;";
-            _connection.Query(query, new {Id = id});
+            if(_connection.Execute(query, new { Id = id }) == 0)
+            {
+                throw new Exception($"Não encontrado categoria de id: {id}");
+            }
         }
         catch (Exception ex)
         {

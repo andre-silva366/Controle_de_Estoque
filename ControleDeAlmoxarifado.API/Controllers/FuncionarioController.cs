@@ -42,7 +42,7 @@ public class FuncionarioController : ControllerBase
         var funcionario = _repository.GetById(id);
         if(funcionario == null)
         {
-            return BadRequest($"Não foi encontrado funcionario com id: {id}"); ;
+            return NotFound($"Não foi encontrado funcionario com id: {id}"); ;
         }
         return Ok(funcionario);
     }
@@ -57,7 +57,7 @@ public class FuncionarioController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest($"{ex.Message}");
+            return NotFound($"{ex.Message}");
         }
     }
 }

@@ -44,13 +44,13 @@ public class CategoriaController : ControllerBase
             var categoria = _repository.GetById(id);
             if (categoria == null)
             {
-                return NoContent();
+                return NotFound($"Não encontrado categoria com id: {id}");
             }
             return Ok(categoria);
         }
         catch(Exception ex)
         {
-            return BadRequest(ex.Message);
+            return NotFound(ex.Message);
         }
         
     }

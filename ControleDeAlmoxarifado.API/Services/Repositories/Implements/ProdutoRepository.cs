@@ -56,12 +56,8 @@ public class ProdutoRepository : IRepository<Produto>
         {
             _connection.Open();
             var query = "SELECT Id ,Nome, Descricao, Quantidade, CategoriaId, FornecedorId,Codigo FROM Produto WHERE Id = @Id;";
-            var produto = _connection.QuerySingle<Produto>(query, new {Id = id});
+            var produto = _connection.QuerySingleOrDefault<Produto>(query, new {Id = id});
             return produto;
-        }
-        catch (Exception ex)
-        {
-            return null;
         }
         finally
         {
@@ -75,13 +71,12 @@ public class ProdutoRepository : IRepository<Produto>
         {
             _connection.Open();
             var query = "DELETE FROM Produto WHERE Id = @Id ;";
-            _connection.Query<Produto>(query, new { Id = id });
+            if(_connection.Execute(query, new { Id = id }) == 0)
+            {
+                throw new Exception($"Não encontrado Produto com id: {id}");
+            }
             
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
+        }        
         finally
         {
             _connection.Close();
