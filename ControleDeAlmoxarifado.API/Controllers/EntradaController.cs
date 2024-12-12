@@ -32,11 +32,15 @@ public class EntradaController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Entrada>> GetAll()
     {
-        var entradas = _repository.GetAll().ToList();
-        if(!entradas.Any())
+        try
         {
-            return NoContent();
+            var entradas = _repository.GetAll().ToList();
+            return Ok(entradas);
         }
-        return Ok(entradas);
+        catch(Exception ex)
+        {
+            return NotFound($"{ex.Message}");
+        }
+        
     }
 }

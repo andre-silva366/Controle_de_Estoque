@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configurar a string de conexão para uso com Dapper e MySQL
-builder.Services.AddSingleton<IDbConnection>((sp) => new MySqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSingleton<IDbConnection>((sp) => new MySqlConnection(builder.Configuration.GetConnectionString("DefaultConnection2")));
 
 // Registrar o repositório genérico
 builder.Services.AddScoped(typeof(IRepository<Categoria>), typeof(CategoriaRepository));

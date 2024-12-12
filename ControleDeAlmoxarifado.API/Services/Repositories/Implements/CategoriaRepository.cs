@@ -20,7 +20,9 @@ public class CategoriaRepository : IRepository<Categoria>
         {
             _connection.Open();
             var query = @"INSERT INTO Categoria(Nome) VALUES (@Nome);";
-            var categoriaAdicionada =  _connection.QuerySingle<Categoria>(query, new { categoria.Nome }) ;
+            var select = @"SELECT Id, Nome FROM Categoria WHERE Nome = @Nome;";
+            _connection.QuerySingleOrDefault<Categoria>(query, new { categoria.Nome }) ;
+            var categoriaAdicionada = _connection.QuerySingleOrDefault<Categoria>(select, new { categoria.Nome });
             return categoriaAdicionada;
         }
         catch (Exception ex)

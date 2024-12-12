@@ -18,7 +18,10 @@ public class FornecedorRepository : IRepository<Fornecedor>
         {
             _connection.Open();
             var query = @"INSERT INTO Fornecedor (Nome, Telefone, Email, Cnpj) VALUES (@Nome, @Telefone, @Email, @Cnpj)";
-            var fornecedorAdicionado = _connection.QuerySingle<Fornecedor>(query, new {fornecedor.Nome, fornecedor.Telefone, fornecedor.Email, fornecedor.Cnpj});
+            var select = "SELECT * FROM Fornecedor WHERE Nome = @Nome;";
+            _connection.QuerySingleOrDefault<Fornecedor>(query, new {fornecedor.Nome, fornecedor.Telefone, fornecedor.Email, fornecedor.Cnpj});
+            var fornecedorAdicionado = _connection.QuerySingleOrDefault<Fornecedor>(select, new { fornecedor.Nome });
+
             return fornecedorAdicionado;
         }
         catch (Exception ex)

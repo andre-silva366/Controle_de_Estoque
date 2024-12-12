@@ -87,12 +87,12 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Saida> GetDate(DateTime date)
+    public IEnumerable<Saida> GetByDate(DateTime date)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Saida> GetMonthYear(int mes, int ano)
+    public IEnumerable<Saida> GetByMonthYear(int mes, int ano)
     {
         throw new NotImplementedException();
     }

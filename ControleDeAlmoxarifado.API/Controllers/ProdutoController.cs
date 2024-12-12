@@ -29,12 +29,16 @@ public class ProdutoController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Produto>> GetAll()
     {
-        var produtos = _repository.GetAll().ToList();
-        if(!produtos.Any())
+        try
         {
-            return NoContent();
+            var produtos = _repository.GetAll().ToList();            
+            return Ok(produtos);
         }
-        return Ok(produtos);
+        catch (Exception ex)
+        {
+            return NotFound($"{ex.Message}");
+        }
+        
     }
 
     [HttpGet("{id:int}")]

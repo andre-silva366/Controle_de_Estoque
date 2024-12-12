@@ -50,9 +50,12 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         try
         {
             _connection.Open();
-            var query = @"SELECT Id,DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId FROM Entrada;";
-
+            var query = @"SELECT Id,DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId FROM Entrada;";            
             var entradas = _connection.Query<Entrada>(query).ToList();
+            if(entradas.Count == 0)
+            {
+                throw new Exception("Não existem dados cadastrados.");
+            }
             return entradas;
         }
         catch (Exception ex)
@@ -90,12 +93,12 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Entrada> GetDate(DateTime date)
+    public IEnumerable<Entrada> GetByDate(DateTime date)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Entrada> GetMonthYear(int mes, int ano)
+    public IEnumerable<Entrada> GetByMonthYear(int mes, int ano)
     {
         throw new NotImplementedException();
     }
