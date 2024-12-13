@@ -32,11 +32,15 @@ public class SaidaController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Saida>> GetAll()
     {
-        var saidas = _repository.GetAll();
-        if (!saidas.Any())
+        try
         {
-            return NoContent();
+            var saidas = _repository.GetAll();            
+            return Ok(saidas);
         }
-        return Ok(saidas);
+        catch (Exception ex)
+        {
+            return NotFound($"{ex.Message}");
+        }
+        
     }
 }

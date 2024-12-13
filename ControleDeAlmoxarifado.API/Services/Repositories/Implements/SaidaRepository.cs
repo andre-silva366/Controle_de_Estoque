@@ -50,12 +50,12 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
             var query = @"SELECT Id, DataSaida, ProdutoId, SolicitanteId, AlmoxarifeId, Quantidade FROM Saida;";
 
             var saidas = _connection.Query<Saida>(query).ToList();
+            if(saidas.Count == 0)
+            {
+                throw new Exception("Não existem dados de saida cadastrados.");
+            }
             return saidas;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"{ex.Message}");
-        }
+        }        
         finally
         {
             _connection.Close();
