@@ -53,6 +53,19 @@ public class ProdutoController : ControllerBase
 
     }
 
+    [HttpPut]
+    public ActionResult<Produto> Update([FromBody]Produto produto)
+    {
+        try
+        {
+            return Ok(_repository.Update(produto));
+        }
+        catch(Exception ex) 
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpDelete]
     public IActionResult Delete(int id)
     {

@@ -89,9 +89,25 @@ public class ProdutoRepository : IRepository<Produto>
         }
     }
 
-    public Produto Update(Produto entity)
+    public Produto Update(Produto produto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var querySelect = "SELECT Id, Nome, Descricao, CategoriaId, FornecedorId, Codigo, Quantidade FROM Produto WHERE Id = @Id;";
+            var produtoAtual = _connection.QuerySingleOrDefault<Produto>(querySelect,new {produto.Id}) ?? throw new Exception($"Não encontrado produto com id: {produto.Id}") ;
+
+            if (_connection.Execute("UPDATE Produto SET Nome = @Nome, Descricao = @Descricao, CategoriaId = @CategoriaId, FornecedorId = @FornecedorId, Codigo = @Codigo, Quantidade = @Quantidade WHERE Id = @Id", new { produto.Nome, produto.Descricao, produto.CategoriaId, produto.FornecedorId, produto.Codigo, produto.Quantidade, produto.Id }) != 1)
+            {
+                throw new Exception("Ocorreu um erro ao tentar atualizar.");
+            }
+            return _connection.QuerySingle<Produto>(querySelect, new { produto.Id });
+
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }
 

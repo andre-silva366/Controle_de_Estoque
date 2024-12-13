@@ -56,7 +56,7 @@ public class CategoriaController : ControllerBase
     }
 
     [HttpPut]
-    public ActionResult<Categoria> Update(Categoria categoria)
+    public ActionResult<Categoria> Update([FromBody]Categoria categoria)
     {
         try
         {
