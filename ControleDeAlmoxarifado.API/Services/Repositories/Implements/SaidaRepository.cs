@@ -101,4 +101,9 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
     {
         throw new NotImplementedException();
     }
+
+    public Saida Update(Saida entity)
+    {
+        throw new NotImplementedException();
+    }
 }

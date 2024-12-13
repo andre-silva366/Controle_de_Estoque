@@ -89,4 +89,9 @@ public class FornecedorRepository : IRepository<Fornecedor>
             _connection.Close();
         }
     }
+
+    public Fornecedor Update(Fornecedor entity)
+    {
+        throw new NotImplementedException();
+    }
 }

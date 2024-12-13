@@ -93,4 +93,26 @@ public class CategoriaRepository : IRepository<Categoria>
             _connection.Close();
         }
     }
+
+    public Categoria Update(Categoria categoria)
+    {
+        try
+        {
+            _connection.Open();
+            var categoriaAtual = _connection.QuerySingleOrDefault<Categoria>("SELECT * FROM Categoria WHERE Id = @Id;",new {categoria.Id});
+            if(categoriaAtual == null)
+            {
+                throw new Exception($"Não encontrado nenhuma categoria com Id: {categoria.Id}");
+            }
+            if(_connection.Execute("UPDATE Categoria SET Nome = @Nome WHERE Id = @Id", new {categoria.Nome,categoria.Id}) != 1)
+            {
+                throw new Exception("Ocorreu um erro ao tentar atualizar.");
+            }
+            return _connection.QuerySingle<Categoria>("SELECT * FROM Categoria WHERE Id = @Id;", new { categoria.Id });
+        }
+        finally
+        {
+            _connection.Close();
+        }
+    }
 }

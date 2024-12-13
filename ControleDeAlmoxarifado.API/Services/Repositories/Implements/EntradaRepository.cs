@@ -107,4 +107,9 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
     {
         throw new NotImplementedException();
     }
+
+    public Entrada Update(Entrada entity)
+    {
+        throw new NotImplementedException();
+    }
 }

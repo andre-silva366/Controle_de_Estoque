@@ -89,4 +89,9 @@ public class FuncionarioRepository : IRepository<Funcionario>
             _connection.Close();
         }
     }
+
+    public Funcionario Update(Funcionario entity)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -88,5 +88,10 @@ public class ProdutoRepository : IRepository<Produto>
             _connection.Close();
         }
     }
+
+    public Produto Update(Produto entity)
+    {
+        throw new NotImplementedException();
+    }
 }
 

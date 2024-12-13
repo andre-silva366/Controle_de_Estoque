@@ -55,6 +55,20 @@ public class CategoriaController : ControllerBase
         
     }
 
+    [HttpPut]
+    public ActionResult<Categoria> Update(Categoria categoria)
+    {
+        try
+        {
+            _repository.Update(categoria);
+            return Ok(categoria);
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
     [HttpDelete]
     public IActionResult Delete(int id)
     {
