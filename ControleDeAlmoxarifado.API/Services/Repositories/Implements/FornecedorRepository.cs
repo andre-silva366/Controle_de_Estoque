@@ -90,8 +90,22 @@ public class FornecedorRepository : IRepository<Fornecedor>
         }
     }
 
-    public Fornecedor Update(Fornecedor entity)
+    public Fornecedor Update(Fornecedor fornecedor)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var querySelect = "SELECT Id, Nome, Telefone, Email, Cnpj FROM Fornecedor WHERE Id = @Id;";
+            var fornecedorAtual = _connection.QuerySingle<Fornecedor>(querySelect, new {fornecedor.Id}) ?? throw new Exception($"Não encontrado fornecedor com id: {fornecedor.Id}");
+            if(_connection.Execute("UPDATE Fornecedor SET Nome = @Nome, Telefone = @Telefone, Email = @Email, Cnpj = @Cnpj WHERE Id = @Id", new {fornecedor.Nome, fornecedor.Telefone, fornecedor.Email, fornecedor.Cnpj, fornecedor.Id}) != 1)
+            {
+                throw new Exception("Ocorreu um erro ao atualizar");
+            }
+            return _connection.QuerySingle<Fornecedor>(querySelect, new {fornecedor.Id});
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }

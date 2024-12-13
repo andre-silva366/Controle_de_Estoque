@@ -47,6 +47,20 @@ public class FornecedorController : ControllerBase
         return Ok(fornecedor);
     }
 
+    [HttpPut]
+    public ActionResult<Fornecedor> Update(Fornecedor fornecedor)
+    {
+        try
+        {
+            var fornecedorAtualizado = _repository.Update(fornecedor);
+            return Ok(fornecedorAtualizado);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpDelete]
     public ActionResult Delete(int id)
     {
