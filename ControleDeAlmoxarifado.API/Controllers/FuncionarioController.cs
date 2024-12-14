@@ -47,6 +47,19 @@ public class FuncionarioController : ControllerBase
         return Ok(funcionario);
     }
 
+    [HttpPut]
+    public ActionResult<Funcionario> Update(Funcionario funcionario)
+    {
+        try
+        {
+            return Ok(_repository.Update(funcionario));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpDelete]
     public IActionResult Delete(int id)
     {

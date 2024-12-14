@@ -90,8 +90,25 @@ public class FuncionarioRepository : IRepository<Funcionario>
         }
     }
 
-    public Funcionario Update(Funcionario entity)
+    public Funcionario Update(Funcionario funcionario)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var querySelect = "SELECT Id, Matricula, Nome, Cargo FROM Funcionario WHERE Id = @Id;";
+            var queryUpdate = "UPDATE Funcionario SET Matricula = @Matricula, Nome = @Nome, Cargo = @Cargo WHERE Id = @Id;";
+            var funcionarioAtual = _connection.QuerySingleOrDefault<Funcionario>(querySelect,new {funcionario.Id}) ?? throw new Exception($"Não encontrado funcionario com id: {funcionario.Id}");
+
+            if (_connection.Execute(queryUpdate, new { funcionario.Matricula, funcionario.Nome, funcionario.Cargo, funcionario.Id }) != 1)
+            {
+                throw new Exception("Ocorreu um erro ao tentar atualizar.");
+            }
+
+            return _connection.QuerySingle<Funcionario>(querySelect, new { funcionario.Id });
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }
