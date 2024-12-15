@@ -18,15 +18,21 @@ public class EntradaController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody]Entrada entrada)
+    public ActionResult<Entrada> Create([FromBody]Entrada entrada)
     {
-        if(entrada == null)
+        try
         {
-            return BadRequest();
+            if (entrada == null)
+            {
+                return BadRequest();
+            }
+            var entradaAdicionada = _repository.Add(entrada);
+            return Ok(entradaAdicionada);
         }
-
-        var entradaAdicionada = _repository.Add(entrada);
-        return Ok(entradaAdicionada);
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }        
     }
 
     [HttpGet]
@@ -42,5 +48,19 @@ public class EntradaController : ControllerBase
             return NotFound($"{ex.Message}");
         }
         
+    }
+
+    [HttpPut]
+    public ActionResult<Entrada> Put(Entrada entrada)
+    {
+        try
+        {
+            var entradaAtualizada = _repository.Add(entrada);
+            return Ok(entradaAtualizada);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }

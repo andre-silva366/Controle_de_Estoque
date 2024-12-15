@@ -32,12 +32,12 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
                 entrada.FuncionarioId
             };
 
-            var entradaAdicionada = _connection.QuerySingle<Entrada>(query,parameters);
+            if(_connection.Execute(query, parameters) != 1)
+            {
+                throw new Exception("Ocorreu um erro ao adicionar a entrada!");
+            }          
+            var entradaAdicionada = _connection.QuerySingleOrDefault<Entrada>("SELECT * FROM Entrada WHERE Id = @Id",new {entrada.Id});
             return entradaAdicionada;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"{ex.Message}");
         }
         finally
         {
@@ -108,8 +108,27 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         throw new NotImplementedException();
     }
 
-    public Entrada Update(Entrada entity)
+    public Entrada Update(Entrada entrada)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _connection.Open();
+            var querySelect = "SELECT * FROM Entrada WHERE Id = @Id";
+            var entradaAtual = _connection.QuerySingleOrDefault<Entrada>(querySelect, new { entrada.Id });
+            if(entradaAtual == null)
+            {
+                throw new Exception($"Não encontrada nenhuma entrada com o id: {entrada.Id}");
+            }
+            var queryUpdate = "UPDATE Entrada SET DataEntrada = @DataEntrada, ProdutoId = @ProdutoId, FornecedorId = @FornecedorId, FuncionarioId = @FuncionarioId, Quantidade = @Quantidade, PrecoUnitario = @PrecoUnitario, PrecoTotal = @PrecoTotal WHERE Id = @Id";
+            if(_connection.Execute(queryUpdate, new {entrada.DataEntrada, entrada.ProdutoId, entrada.FornecedorId, entrada.FuncionarioId, entrada.Quantidade, entrada.PrecoUnitario, entrada.PrecoTotal, entrada.Id}) != 1)
+            {
+                throw new Exception($"Ocorreu um erro ao atualizar!");
+            }
+            return _connection.QuerySingleOrDefault<Entrada>(querySelect, new { entrada.Id });
+        }
+        finally
+        {
+            _connection.Close();
+        }
     }
 }

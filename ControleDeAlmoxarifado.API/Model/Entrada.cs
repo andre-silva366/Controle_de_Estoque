@@ -1,7 +1,4 @@
-﻿using ControleDeAlmoxarifado.API.Services;
-using System.Text.Json.Serialization;
-
-namespace ControleDeAlmoxarifado.API.Model;
+﻿namespace ControleDeAlmoxarifado.API.Model;
 
 public class Entrada
 {
@@ -10,7 +7,7 @@ public class Entrada
     public int ProdutoId { get; set; }
     public int Quantidade { get; set; }
     public decimal PrecoUnitario { get; set; }
-    public decimal PreçoTotal => PrecoUnitario * Quantidade;
+    public decimal PrecoTotal => PrecoUnitario * Quantidade;
     public int FornecedorId { get; set; }
     public int FuncionarioId { get; set; }
 }

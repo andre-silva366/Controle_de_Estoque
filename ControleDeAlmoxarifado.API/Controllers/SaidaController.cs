@@ -18,15 +18,22 @@ public class SaidaController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Saida saida)
+    public ActionResult<Saida> Create(Saida saida)
     {
-        if (saida == null)
+        try
         {
-            return BadRequest();
-        }
+            if (saida == null)
+            {
+                return BadRequest();
+            }
 
-        var saidaAdicionada = _repository.Add(saida);
-        return Ok(saidaAdicionada);
+            var saidaAdicionada = _repository.Add(saida);
+            return Ok(saidaAdicionada);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }        
     }
 
     [HttpGet]
@@ -42,5 +49,18 @@ public class SaidaController : ControllerBase
             return NotFound($"{ex.Message}");
         }
         
+    }
+
+    [HttpPut]
+    public ActionResult<Saida> Update(Saida saida)
+    {
+        try
+        {
+            return Ok(_repository.Update(saida));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
