@@ -17,8 +17,10 @@ public class FuncionarioRepository : IRepository<Funcionario>
         try
         {
             _connection.Open();
-            var query = @"INSERT INTO Funcionario (Matricula, Nome, Cargo) VALUES (@Matricula, @Nome, @Cargo);";
-            var funcionarioAdicionado = _connection.QuerySingle<Funcionario>(query, new { funcionario.Matricula,funcionario.Nome, funcionario.Cargo });
+            var queryInsert = @"INSERT INTO Funcionario (Matricula, Nome, Cargo) VALUES (@Matricula, @Nome, @Cargo);SELECT LAST_INSERT_ID();";
+            var querySelect = "SELECT Id, Matricula, Nome, Cargo FROM Funcionario WHERE Id = @Id;";
+            var funcionarioAdicionadoId = _connection.QuerySingleOrDefault<int>(queryInsert, new { funcionario.Matricula,funcionario.Nome, funcionario.Cargo });
+            var funcionarioAdicionado = _connection.QuerySingleOrDefault<Funcionario>(querySelect, new {Id = funcionarioAdicionadoId}) ?? throw new Exception("Erro ao adicionar funcionario");
             return funcionarioAdicionado;
         }
         catch (Exception ex)

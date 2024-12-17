@@ -19,7 +19,8 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         try
         {
             _connection.Open();
-            var query = @"INSERT INTO Entrada (DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId) VALUES (@DataEntrada, @ProdutoId, @Quantidade, @PrecoUnitario, @PrecoTotal, @FornecedorId, @FuncionarioId);";
+            var queryInsert = @"INSERT INTO Entrada (DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId) VALUES (@DataEntrada, @ProdutoId, @Quantidade, @PrecoUnitario, @PrecoTotal, @FornecedorId, @FuncionarioId);SELECT LAST_INSERT_ID();";
+            var querySelect = "SELECT Id, DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId WHERE Id = @Id;";
 
             var parameters = new
             {
@@ -32,11 +33,8 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
                 entrada.FuncionarioId
             };
 
-            if(_connection.Execute(query, parameters) != 1)
-            {
-                throw new Exception("Ocorreu um erro ao adicionar a entrada!");
-            }          
-            var entradaAdicionada = _connection.QuerySingleOrDefault<Entrada>("SELECT * FROM Entrada WHERE Id = @Id",new {entrada.Id});
+            var entradaAdicionadaId = _connection.QuerySingleOrDefault<int>(queryInsert, parameters);         
+            var entradaAdicionada = _connection.QuerySingleOrDefault<Entrada>(querySelect,new {entradaAdicionadaId}) ?? throw new Exception("Ocorreu um erro ao adicionar a entrada");
             return entradaAdicionada;
         }
         finally

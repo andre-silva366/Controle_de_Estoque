@@ -2,7 +2,6 @@
 using ControleDeAlmoxarifado.API.Services.Repositories.Interfaces;
 using Dapper;
 using System.Data;
-using System.Reflection;
 
 namespace ControleDeAlmoxarifado.API.Services.Repositories.Implements;
 
@@ -18,14 +17,13 @@ public class ProdutoRepository : IRepository<Produto>
         try
         {
             _connection.Open();
-            var query = @"INSERT INTO Produto (Nome, Descricao, Quantidade, CategoriaId, FornecedorId,Codigo) VALUES (@Nome, @Descricao, @Quantidade, @CategoriaId, @FornecedorId,@Codigo);";
+            var queryInsert = @"INSERT INTO Produto (Nome, Descricao, Quantidade, CategoriaId, FornecedorId,Codigo) VALUES (@Nome, @Descricao, @Quantidade, @CategoriaId, @FornecedorId,@Codigo);SELECT LAST_INSERT_ID();";
 
-            var select = "SELECT * FROM Produto WHERE Codigo = @Codigo";
+            var querySelect = "SELECT Id, Nome, Descricao, CategoriaId, FornecedorId, Codigo, Quantidade FROM Produto WHERE Id = @Id";
 
-            _connection.QuerySingle<Produto>(query, new{produto.Nome,produto.Descricao,produto.Quantidade,produto.CategoriaId,produto.FornecedorId,produto.Codigo});
-            Thread.Sleep(300);
-            var produtoAdicionado = _connection.QuerySingle<Produto>(select,new {produto.Codigo});
-            return produtoAdicionado;
+            var produtoId = _connection.QuerySingleOrDefault<int>(queryInsert, new{produto.Nome,produto.Descricao,produto.Quantidade,produto.CategoriaId,produto.FornecedorId,produto.Codigo});
+
+            return _connection.QuerySingleOrDefault<Produto>(querySelect,new {Id = produtoId});
         }
         catch (Exception ex)
         {
@@ -102,7 +100,6 @@ public class ProdutoRepository : IRepository<Produto>
                 throw new Exception("Ocorreu um erro ao tentar atualizar.");
             }
             return _connection.QuerySingle<Produto>(querySelect, new { produto.Id });
-
         }
         finally
         {

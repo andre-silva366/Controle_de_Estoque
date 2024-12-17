@@ -19,10 +19,10 @@ public class CategoriaRepository : IRepository<Categoria>
         try
         {
             _connection.Open();
-            var query = @"INSERT INTO Categoria(Nome) VALUES (@Nome);";
-            var select = @"SELECT Id, Nome FROM Categoria WHERE Nome = @Nome;";
-            _connection.QuerySingleOrDefault<Categoria>(query, new { categoria.Nome }) ;
-            var categoriaAdicionada = _connection.QuerySingleOrDefault<Categoria>(select, new { categoria.Nome });
+            var query = @"INSERT INTO Categoria(Nome) VALUES (@Nome);SELECT LAST_INSERT_ID();";
+            var select = @"SELECT Id, Nome FROM Categoria WHERE Id = @Id;";
+            var categoriaId = _connection.QuerySingleOrDefault<int>(query, new { categoria.Nome }) ;
+            var categoriaAdicionada = _connection.QuerySingleOrDefault<Categoria>(select, new { Id = categoriaId });
             return categoriaAdicionada;
         }
         catch (Exception ex)
@@ -108,7 +108,7 @@ public class CategoriaRepository : IRepository<Categoria>
             {
                 throw new Exception("Ocorreu um erro ao tentar atualizar.");
             }
-            return _connection.QuerySingle<Categoria>("SELECT * FROM Categoria WHERE Id = @Id;", new { categoria.Id });
+            return _connection.QuerySingleOrDefault<Categoria>("SELECT * FROM Categoria WHERE Id = @Id;", new { categoria.Id }) ?? throw new Exception("Ocorreu um erro ao atualizar categoria.");
         }
         finally
         {
