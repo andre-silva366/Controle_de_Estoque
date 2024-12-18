@@ -63,4 +63,19 @@ public class EntradaController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpDelete("{id:int}")]
+    public IActionResult Delete(int id)
+    {
+        try
+        {
+            _repository.Remove(id);
+            return Ok($"A Entrada com id: {id} foi deletada com sucesso.");
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
 }

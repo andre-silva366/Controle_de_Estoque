@@ -61,7 +61,7 @@ public class FornecedorController : ControllerBase
         }
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
         try

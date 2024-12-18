@@ -63,4 +63,18 @@ public class SaidaController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpDelete("{id:int}")]
+    public ActionResult Delete(int id)
+    {
+        try
+        {
+            _repository.Remove(id);
+            return Ok($"A saida com id: {id} foi deletada com sucesso");
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

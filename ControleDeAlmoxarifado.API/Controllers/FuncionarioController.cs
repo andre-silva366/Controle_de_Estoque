@@ -60,7 +60,7 @@ public class FuncionarioController : ControllerBase
         }
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public IActionResult Delete(int id)
     {
         try

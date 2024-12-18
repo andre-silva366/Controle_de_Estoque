@@ -100,12 +100,7 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
     {
         throw new NotImplementedException();
     }
-
-    public void Remove(int id)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public Saida Update(Saida saida)
     {
         try
@@ -129,4 +124,25 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
             _connection.Close();
         }
     }
+
+    public void Remove(int id)
+    {
+        try
+        {
+            var querySelect = "SELECT * FROM Saida WHERE Id = @Id;";
+            var queryDelete = "DELETE FROM Saida WHERE Id = @Id;";
+
+            var saida = _connection.QuerySingleOrDefault<Saida>(querySelect, new { Id = id });
+            if(saida == null)
+            {
+                throw new Exception($"Não encontrada saida com id: {id}");
+            }
+            _connection.Execute(queryDelete, new {saida.Id});
+        }
+        finally
+        {
+            _connection.Close();
+        }
+    }
+
 }

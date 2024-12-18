@@ -99,12 +99,7 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
     public IEnumerable<Entrada> GetByMonthYear(int mes, int ano)
     {
         throw new NotImplementedException();
-    }
-
-    public void Remove(int id)
-    {
-        throw new NotImplementedException();
-    }
+    }  
 
     public Entrada Update(Entrada entrada)
     {
@@ -123,6 +118,25 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
                 throw new Exception($"Ocorreu um erro ao atualizar!");
             }
             return _connection.QuerySingleOrDefault<Entrada>(querySelect, new { entrada.Id });
+        }
+        finally
+        {
+            _connection.Close();
+        }
+    }
+    public void Remove(int id)
+    {
+        try
+        {
+            var queryDelete = "DELETE FROM Entrada WHERE Id = @Id;";
+            var querySelect = "SELECT * FROM Entrada WHERE Id = @Id;";
+            var entrada = _connection.QuerySingleOrDefault<Entrada>(querySelect,new {Id = id});
+            if(entrada == null)
+            {
+                throw new Exception($"Não encontrada entrada com id: {id}");
+            }
+
+            _connection.Execute(queryDelete, new { Id = id });
         }
         finally
         {

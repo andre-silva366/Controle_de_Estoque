@@ -66,7 +66,7 @@ public class ProdutoController : ControllerBase
         }
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public IActionResult Delete(int id)
     {
         var produto = _repository.GetById(id);

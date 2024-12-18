@@ -69,7 +69,7 @@ public class CategoriaController : ControllerBase
         }
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public IActionResult Delete(int id)
     {
         var categoria = _repository.GetById(id);
