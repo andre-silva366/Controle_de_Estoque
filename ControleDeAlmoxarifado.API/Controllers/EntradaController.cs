@@ -55,7 +55,7 @@ public class EntradaController : ControllerBase
     {
         try
         {
-            var entradaAtualizada = _repository.Add(entrada);
+            var entradaAtualizada = _repository.Update(entrada);
             return Ok(entradaAtualizada);
         }
         catch (Exception ex)
