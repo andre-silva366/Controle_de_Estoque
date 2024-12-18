@@ -20,7 +20,7 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
         {
             _connection.Open();
             var queryInsert = @"INSERT INTO Entrada (DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId) VALUES (@DataEntrada, @ProdutoId, @Quantidade, @PrecoUnitario, @PrecoTotal, @FornecedorId, @FuncionarioId);SELECT LAST_INSERT_ID();";
-            var querySelect = "SELECT Id, DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId WHERE Id = @Id;";
+            var querySelect = "SELECT Id, DataEntrada, ProdutoId, Quantidade, PrecoUnitario, PrecoTotal, FornecedorId, FuncionarioId FROM Entrada WHERE Id = @Id;";
 
             var parameters = new
             {
@@ -34,7 +34,7 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
             };
 
             var entradaAdicionadaId = _connection.QuerySingleOrDefault<int>(queryInsert, parameters);         
-            var entradaAdicionada = _connection.QuerySingleOrDefault<Entrada>(querySelect,new {entradaAdicionadaId}) ?? throw new Exception("Ocorreu um erro ao adicionar a entrada");
+            var entradaAdicionada = _connection.QuerySingleOrDefault<Entrada>(querySelect,new {Id = entradaAdicionadaId}) ?? throw new Exception("Ocorreu um erro ao adicionar a entrada");
             return entradaAdicionada;
         }
         finally
