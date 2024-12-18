@@ -2,7 +2,6 @@
 using ControleDeAlmoxarifado.API.Services.Repositories.Interfaces;
 using Dapper;
 using System.Data;
-using System.Reflection;
 
 namespace ControleDeAlmoxarifado.API.Services.Repositories.Implements;
 
@@ -19,7 +18,9 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
         try
         {
             _connection.Open();
-            var query = @"INSERT INTO Saida (DataSaida, ProdutoId, SolicitanteId, AlmoxarifeId, Quantidade) VALUES (@DataSaida, @ProdutoId, @SolicitanteId, @AlmoxarifeId, @Quantidade);";
+            var queryInsert = @"INSERT INTO Saida (DataSaida, ProdutoId, SolicitanteId, AlmoxarifeId, Quantidade) VALUES (@DataSaida, @ProdutoId, @SolicitanteId, @AlmoxarifeId, @Quantidade); SELECT LAST_INSERT_ID();";
+
+            var querySelect = "SELECT Id, DataSaida, ProdutoId, SolicitanteId, AlmoxarifeId, Quantidade FROM Saida WHERE Id = @Id;";
 
             var parameters = new
             {
@@ -30,18 +31,15 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
                 saida.Quantidade
             };
 
-            if (_connection.Execute(query, parameters) != 1)
+            var saidaAdicionadaId = _connection.QuerySingleOrDefault<int>(queryInsert, parameters);
+            if(saidaAdicionadaId == 0)
             {
-                throw new Exception("Ocorreu um erro ao adicionar a saida!");
+                throw new Exception("Ocorreu um erro ao inserir a saida.");
             }
 
-            var saidaAdicionada = _connection.QuerySingleOrDefault<Saida>("SELECT * FROM Saida WHERE Id = @Id", new { saida.Id });
+            var saidaAdicionada = _connection.QuerySingleOrDefault<Saida>(querySelect, new { Id = saidaAdicionadaId }) ?? throw new Exception("Ocorreu um erro ao retornar a saida adicionada");
             return saidaAdicionada;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"{ex.Message}");
-        }
+        }        
         finally
         {
             _connection.Close();
