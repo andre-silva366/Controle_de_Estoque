@@ -35,6 +35,10 @@ public class EntradaRepository : IRepository<Entrada>, ITransacoesRepository<Ent
 
             var entradaAdicionadaId = _connection.QuerySingleOrDefault<int>(queryInsert, parameters);         
             var entradaAdicionada = _connection.QuerySingleOrDefault<Entrada>(querySelect,new {Id = entradaAdicionadaId}) ?? throw new Exception("Ocorreu um erro ao adicionar a entrada");
+
+            var querySoma = "UPDATE Produto SET Quantidade = Quantidade + @Quantidade WHERE Id = @Id;";
+            _connection.Execute(querySoma, new { entrada.Quantidade, Id = entrada.ProdutoId });
+
             return entradaAdicionada;
         }
         finally
