@@ -37,6 +37,17 @@ public class SaidaRepository : IRepository<Saida>, ITransacoesRepository<Saida>
                 throw new Exception("Ocorreu um erro ao inserir a saida.");
             }
 
+            var queryQuantidade = "SELECT Quantidade FROM Produto WHERE Id = @Id";
+            var quantidadeProduto = _connection.QuerySingleOrDefault<int>(queryQuantidade, new {Id = saida.ProdutoId});
+
+            if (saida.Quantidade > quantidadeProduto)
+            {
+                throw new Exception("Não é possível retirar essa quantidade de produto.");
+            }
+
+            var subtraindo = "UPDATE Produto SET Quantidade = Quantidade - @Quantidade WHERE Id = @Id;";
+            _connection.Execute(subtraindo, new {saida.Quantidade, Id = saida.ProdutoId});
+
             var saidaAdicionada = _connection.QuerySingleOrDefault<Saida>(querySelect, new { Id = saidaAdicionadaId }) ?? throw new Exception("Ocorreu um erro ao retornar a saida adicionada");
             return saidaAdicionada;
         }        
