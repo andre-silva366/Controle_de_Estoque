@@ -9,7 +9,4 @@ public class Entrada
     public decimal PrecoUnitario { get; set; }
     public int PreçoTotal { get; set; }
     public int IdFornecedor { get; set; }
-    public Produto Produto { get; set; }
-    public Fornecedor Fornecedor { get; set; }
-    public Funcionario Funcionario { get; set; }
 }

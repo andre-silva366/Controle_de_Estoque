@@ -7,5 +7,4 @@ public class Fornecedor
     public string Telefone { get; set; }
     public string Email { get; set; }
     public string CpfCnpj { get; set; }
-    public ICollection<Produto> Produtos { get; set; }
 }
