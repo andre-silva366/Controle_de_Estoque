@@ -2,6 +2,7 @@ using ControleDeAlmoxarifado.API.Model;
 using ControleDeAlmoxarifado.API.Services.Repositories.Implements;
 using ControleDeAlmoxarifado.API.Services.Repositories.Interfaces;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ builder.Services.AddScoped(typeof(IRepository<Entrada>), typeof(EntradaRepositor
 builder.Services.AddScoped(typeof(IRepository<Saida>), typeof(SaidaRepository));
 builder.Services.AddScoped(typeof(ITransacoesRepository<Saida>), typeof(SaidaRepository));
 builder.Services.AddScoped(typeof(ITransacoesRepository<Entrada>), typeof(EntradaRepository));
+builder.Services.AddScoped(typeof(IUserRepository<User>), typeof(UserRepository));
 
 
 var app = builder.Build();
