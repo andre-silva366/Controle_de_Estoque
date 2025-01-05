@@ -2,6 +2,7 @@
 using System.Data;
 using Dapper;
 using ControleDeAlmoxarifado.API.Services.Repositories.Interfaces;
+using System.Data.Common;
 
 namespace ControleDeAlmoxarifado.API.Services.Repositories.Implements;
 
@@ -23,7 +24,7 @@ public class UserRepository : IUserRepository<User>
 
             var querySelect = "SELECT UserId, Username, UserRole FROM Users WHERE UserId = @Id;";
 
-            var userId = _connection.QuerySingleOrDefault<int>(queryInsert, new { user.Username, PasswordHash = passwordHash, UserRole = user.Role });
+            var userId = _connection.QuerySingleOrDefault<int>(queryInsert, new { user.Username, PasswordHash = passwordHash, user.UserRole });
 
             var userCriado = _connection.QuerySingleOrDefault<User>(querySelect, new { Id = userId });
 
@@ -55,17 +56,31 @@ public class UserRepository : IUserRepository<User>
         
     public User Authenticate(string username, string password)
     {
-        using (_connection)
+        try
         {
             var user = _connection.QuerySingleOrDefault<User>("SELECT * FROM Users WHERE Username = @Username", new { Username = username });
 
-            if (user == null || !VerifyPassword(password, user.PasswordHash))
+            if (user == null)
             {
-                return null;
+                throw new Exception("Usuario não encontrado!");
+            }
+            if (!VerifyPassword(password, user.PasswordHash))
+            {
+                throw new Exception("Dados inválidos, verifique o usuario e a senha!");
             }
 
-            return user;
+            return new User
+            {
+                UserId = user.UserId,
+                Username = username,
+                UserRole = user.UserRole
+            };
         }
+        finally 
+        { 
+            _connection.Close(); 
+        }
+        
     }
     public bool VerifyPassword(string password, string storeHash)
     {
